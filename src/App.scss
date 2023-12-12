@@ -1,0 +1,267 @@
+$body-bgcolor:  rgb(3, 0, 6);
+$main-bgcolor:  rgb(14, 12, 16);
+$checkbox : rgb(255, 0, 179);
+$text:  #ccc;
+
+@mixin margin($t, $r, $b, $l){
+  -webkit-margin: $t $r $b $l;
+  -moz-margin: $t $r $b $l;
+  -ms-margin: $t $r $b $l;
+  margin: $t $r $b $l;
+}
+
+body {
+  background-color: $body-bgcolor;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.new-item-form {
+  max-width: 600px;
+  @include margin(0, auto, 0, auto);
+
+  .form-row {
+    width: 100%;
+    position: relative;
+
+    input {
+      color: $text;
+      width: 100%;
+      padding: 13px 0 13px 40px;
+      border: 2px solid $main-bgcolor;
+      border-radius: 15px;
+      background-color: unset;
+      outline: 0;
+    }
+
+    ::placeholder {
+      color: $text;
+    }
+
+    .add {
+      font-size: 20px;
+      position: absolute;
+      background-color: $checkbox;
+      border-radius: 6px;
+      top: 26%;
+      left: 10px;
+    }
+  }
+}
+
+.app {
+  @extend .new-item-form;
+  padding: 50px 20px;
+
+  p {
+    color: $text;
+  }
+
+      .task-label {
+        padding: 10px;
+        @include margin(10px, 0, 10px, 0);
+        background-color: $main-bgcolor;
+        color: #ccc;
+        border-radius: 15px;
+        user-select: none;
+  
+        .task {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+
+          &.completed {
+            text-decoration: line-through;
+          }
+        }
+
+        label {
+          @extend .task;
+          font-size: 14px;
+          position: relative;
+        }
+
+        .check {
+          width: 20px;
+          height: 20px;
+          border: 2px solid $checkbox;
+          border-radius: 7px;
+          position: absolute;
+
+          .check-icon {
+            color: $main-bgcolor;
+            font-size: 30px;
+            @include margin(-7px, 0, 0, -7px)
+          }
+        }
+
+        input {
+          margin-right: 10px;
+          opacity: 0;
+        }
+
+        input:checked ~ .check {
+          background-color: $checkbox;
+          color: $body-bgcolor;
+        }
+
+        .icons {
+          background-color: $body-bgcolor;
+          padding: 5px 5px 2px;
+          border-radius: 10px;
+          opacity: 0;
+          display: flex;
+          gap: 10px;
+
+          .delete {
+            border-right: 1px solid $main-bgcolor;
+            color: $checkbox;
+            cursor: pointer;
+          }
+        }
+
+        .Today {
+          color: gold;
+        }
+        .Thursday {
+          color: green;
+        }
+        .Monday {
+          color: rgb(0, 153, 255);
+        }
+        .Yesterday {
+          color: rgb(186, 186, 186);
+        }
+  
+      }
+
+      .task:hover .icons{
+        opacity: 1;
+      }
+  
+      .sub-task {
+        width: 97%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px;
+        @include margin(0, 0, 10px, 1rem);
+        background-color: $main-bgcolor;
+        color: $text;
+        border-radius: 15px;
+        user-select: none;
+  
+        label {
+          display: flex;
+          font-size: 14px;
+          position: relative;
+        }
+
+        .check {
+          width: 20px;
+          height: 20px;
+          border: 2px solid $checkbox;
+          border-radius: 7px;
+          position: absolute;
+
+          .check-icon {
+            color: $main-bgcolor;
+            font-size: 30px;
+            @include margin(-7px, 0, 0, -7px)
+          }
+        }
+
+        input {
+          margin-right: 10px;
+          opacity: 0;
+        }
+  
+        &.completed {
+          text-decoration: line-through;
+        }
+
+        input:checked ~ .check {
+          background-color: $checkbox;
+          color: $body-bgcolor;
+        }
+
+        .icons {
+          background-color: $body-bgcolor;
+          padding: 5px 5px 2px;
+          border-radius: 10px;
+          opacity: 0;
+          display: flex;
+          gap: 10px;
+
+          .delete {
+            border-right: 1px solid $main-bgcolor;
+            color: $checkbox;
+            cursor: pointer;
+          }
+        }
+      }
+      .sub-task:hover .icons{
+        opacity: 1;
+      }
+    }
+
+    .modal {
+      color: $text;
+      max-width: 600px;
+      @include margin(50px, auto, 0, auto);
+      border: 1px solid $main-bgcolor;
+      padding: 50px;
+      border-radius: 15px;
+
+      h4 {
+        color: $checkbox;
+      }
+
+      input {
+        width: 60%;
+        background-color: unset;
+        border: 1px solid $checkbox;
+        padding: 10px;
+        border-radius: 10px 0 0 10px;
+        color: $text;
+        outline: 0;
+      }
+      button {
+        padding: 10px 15px 10px 10px;
+        background-color: $checkbox;
+        border: 1px solid $checkbox;
+        border-radius: 0 10px 10px 0;
+        font-weight: 600;
+      }
+    }
+    .reorder-list {
+      background-color: $main-bgcolor;
+      padding: 10px 20px 20px;
+      margin-top: 20px;
+      border-radius: 15px;
+
+      ul {
+        background-color: $body-bgcolor;
+        padding: 10px;
+        border-radius: 5px;
+
+        li {
+          color: $checkbox !important;
+          padding: 5px 0;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+
+          .del-btn {
+            color: $body-bgcolor;
+            background-color: $checkbox;
+            padding: 0 3px;
+            border-radius: 5px;
+            cursor: pointer;
+          }
+        }
+      }
+    }
+  

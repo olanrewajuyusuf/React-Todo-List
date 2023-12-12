@@ -1,0 +1,74 @@
+{
+  "todoData": [
+    {
+      "id": 1,
+      "title": "Finish the essay collaboration",
+      "completed": false,
+      "set_deadline": "Today",
+      "subTasks": [
+        {
+          "id": 1,
+          "title": "Send collaboration files to Jersha",
+          "completed": false
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Finish the essay collaboration",
+      "completed": false,
+      "set_deadline": "Thursday",
+      "subTasks": [
+        {
+          "id": 1,
+          "title": "Push the essay to github",
+          "completed": false
+        },
+        {
+          "id": 2,
+          "title": "Raise the PR",
+          "completed": false
+        },
+        {
+          "id": 3,
+          "title": "Checking for feedback",
+          "completed": false
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Read next chapter of the book in Danish",
+      "completed": false
+    },
+    {
+      "id": 4,
+      "title": "Do the math for next monday",
+      "completed": false,
+      "set_deadline": "Monday"
+    },
+    {
+      "id": 5,
+      "title": "Send the finished assignment",
+      "completed": true
+    },
+    {
+      "id": 6,
+      "title": "Read english book chapter 5",
+      "completed": true,
+      "set_deadline": "Yesterday"
+    },
+    {
+      "title": "Al-Baith stores Cloud",
+      "id": "43a77894-36ef-4798-acf9-b87d9fda4d6e",
+      "completed": false,
+      "subTasks": [
+        {
+          "title": "Hitting",
+          "id": "4314fdb8-a130-476f-9631-d8ade9025d73",
+          "completed": false
+        }
+      ]
+    }
+  ]
+}
