@@ -4,7 +4,7 @@
       "id": 1,
       "title": "Finish the essay collaboration",
       "completed": false,
-      "set_deadline": "Today",
+      "set_day": "2023-12-14",
       "subTasks": [
         {
           "id": 1,
@@ -17,7 +17,7 @@
       "id": 2,
       "title": "Finish the essay collaboration",
       "completed": false,
-      "set_deadline": "Thursday",
+      "set_day": "2023-12-07",
       "subTasks": [
         {
           "id": 1,
@@ -45,7 +45,7 @@
       "id": 4,
       "title": "Do the math for next monday",
       "completed": false,
-      "set_deadline": "Monday"
+      "set_day": "2023-12-11"
     },
     {
       "id": 5,
@@ -56,16 +56,22 @@
       "id": 6,
       "title": "Read english book chapter 5",
       "completed": true,
-      "set_deadline": "Yesterday"
+      "set_day": "2023-12-13"
     },
     {
-      "title": "Al-Baith stores Cloud",
-      "id": "43a77894-36ef-4798-acf9-b87d9fda4d6e",
+      "title": "Hitting the Gym",
+      "id": "71e65a3e-d295-4744-ab9c-0562bddd6aa1",
       "completed": false,
+      "set_day": "2023-12-12",
       "subTasks": [
         {
-          "title": "Hitting",
-          "id": "4314fdb8-a130-476f-9631-d8ade9025d73",
+          "title": "30 press up",
+          "id": "4dd0017c-7c3c-464d-8330-0f5898834366",
+          "completed": false
+        },
+        {
+          "title": "Walking the park",
+          "id": "fe07fea2-aa2d-4c0f-9359-61c790917e89",
           "completed": false
         }
       ]

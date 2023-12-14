@@ -6,6 +6,39 @@ const TodoItems = ({data, handleTaskUpdate,  handleTaskDelete, handleDrag}) => {
   const [showSubtasks, setShowSubtasks] = useState({});
   const [arrowRotation, setArrowRotation] = useState({});
 
+  const getSpecificDay = (dateString) => {
+    const currentDate = new Date();
+    const specificDate = new Date(dateString);
+
+    if (
+      currentDate.getFullYear() === specificDate.getFullYear() &&
+      currentDate.getMonth() === specificDate.getMonth() &&
+      currentDate.getDate() === specificDate.getDate()
+    ) {
+      return 'Today';
+    } else {
+      const yesterday = new Date(currentDate);
+      yesterday.setDate(currentDate.getDate() - 1);
+
+      if (
+          yesterday.getFullYear() === specificDate.getFullYear() &&
+          yesterday.getMonth() === specificDate.getMonth() &&
+          yesterday.getDate() === specificDate.getDate()
+      ) {
+          return 'Yesterday';
+      } else {
+          const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+          return daysOfWeek[specificDate.getDay()];
+      }
+    }
+}
+
+// Example usage
+const todayOrSpecificDay = getSpecificDay('2023-12-14');
+console.log(`On 2023-01-01, it is ${todayOrSpecificDay}`);
+
+
+  // <====== SHOW SUBTASKS FUNCTION HANDLER ======>
   const handleShowSubtasks = (taskId) => {
     setShowSubtasks((prev) => ({
       ...prev,
@@ -20,18 +53,22 @@ const TodoItems = ({data, handleTaskUpdate,  handleTaskDelete, handleDrag}) => {
 
   let taskUnmarked = [];
   let taskMarked = [];
-  let subTask = '';
+  let subtaskLength = 0;
   if (data) {
     taskUnmarked = data.filter(task => !task.completed);
     taskMarked = data.filter(task => task.completed);
 
-    subTask = taskUnmarked.map(task => task.subTasks)
+    const subTask = taskUnmarked.filter(task => task.subTasks).map(ele => ele.subTasks.length)
+    
+    for(let i = 0; i < subTask.length; i++){
+      subtaskLength += subTask[i]
+    }
   }
 
   return (
     <>
       {/* =====UNMARKED TASKS SECTION===== */}
-      <p>Tasks - {taskUnmarked.length + subTask.length} </p>
+      <p>Tasks - {taskUnmarked.length + subtaskLength} </p>
       <UnMarkedTodo 
         data={data}
         handleTaskUpdate={handleTaskUpdate}
@@ -40,6 +77,8 @@ const TodoItems = ({data, handleTaskUpdate,  handleTaskDelete, handleDrag}) => {
         arrowRotation={arrowRotation}
         showSubtasks={showSubtasks}
         handleDrag={handleDrag}
+        taskUnmarked={taskUnmarked}
+        getSpecificDay={getSpecificDay}
       />
 
       {/* =====COMPLETED TASKS SECTION===== */}
@@ -52,6 +91,8 @@ const TodoItems = ({data, handleTaskUpdate,  handleTaskDelete, handleDrag}) => {
         arrowRotation={arrowRotation}
         showSubtasks={showSubtasks}
         handleDrag={handleDrag}
+        taskMarked={taskMarked}
+        getSpecificDay={getSpecificDay}
       />
     </>
   )

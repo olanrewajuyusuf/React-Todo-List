@@ -11,16 +11,38 @@ const EditModal = ({ data, setData }) => {
 
         const updatedTasks = data.map(item => {
             if (item.id === id) {
-                return {...item, title: value}
+                return { ...item, title: value };
             }
+
+            // Check if the task has subtasks and update them accordingly
+            if (item.subTasks) {
+                const updatedSubTasks = item.subTasks.map(subTask => {
+                    if (subTask.id === id) {
+                        return { ...subTask, title: value };
+                    }
+                    return subTask;
+                });
+                return { ...item, subTasks: updatedSubTasks };
+            }
+
             return item;
-        })
+        });
     
-        const updatedItem = updatedTasks.find(item => item.id === id)
-        fetch("http://localhost:8000/todoData/" + id, {
+        const updatedSubtask = updatedTasks.find(item => {
+            if (item.subTasks) {
+                return item.subTasks.find(task => task.id === id);
+            }
+            return item.id === id;
+        })
+
+        const updatedTask = updatedTasks.find(item => item.id === id);
+      
+        let taskID = updatedSubtask ? updatedSubtask.id : id;
+
+        fetch("http://localhost:8000/todoData/" + taskID, {
             method: "PUT",
             headers: {"Content-Type": "application/json"},
-            body: JSON.stringify(updatedItem)
+            body: JSON.stringify(taskID === id ? updatedTask : updatedSubtask)
         }).then(()=>{
             console.log("Item Updated");
             setData(updatedTasks);

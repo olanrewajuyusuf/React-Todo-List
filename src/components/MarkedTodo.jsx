@@ -3,17 +3,7 @@ import { MdDeleteOutline, MdEditNote } from "react-icons/md";
 import { GoCalendar } from "react-icons/go";
 import { Link } from "react-router-dom";
 
-const MarkedTodo = ({data, handleTaskUpdate, handleTaskDelete, handleShowSubtasks, arrowRotation, showSubtasks, handleDrag}) => {
-
-  let taskUnmarked = [];
-  let taskMarked = [];
-  let subTask = '';
-  if (data) {
-    taskUnmarked = data.filter(task => !task.completed);
-    taskMarked = data.filter(task => task.completed);
-
-    subTask = taskUnmarked.map(task => task.subTasks)
-  }
+const MarkedTodo = ({data, handleTaskUpdate, handleTaskDelete, handleShowSubtasks, arrowRotation, showSubtasks, handleDrag, taskMarked, getSpecificDay}) => {
 
   return (
     <>
@@ -37,18 +27,22 @@ const MarkedTodo = ({data, handleTaskUpdate, handleTaskDelete, handleShowSubtask
                 <Link to={`/edit/${task.id}`}><MdEditNote /></Link>
               </div>
 
-              {task.subTasks && <IoIosArrowUp />}
+              {task.subTasks && <IoIosArrowUp 
+                className="arrow" 
+                onClick={() => handleShowSubtasks(task.id)} 
+                style={{rotate: arrowRotation[task.id] ? '180deg' : ''}}
+              />}
             </section>
 
-            <div className={task.set_deadline && task.set_deadline} style={{fontSize: 12, marginTop: 5}}>
-              {task.set_deadline && <span ><GoCalendar /> {task.set_deadline}</span>}
+            <div className={task.set_day && getSpecificDay(task.set_day)} style={{fontSize: 12, marginTop: 5}}>
+              {task.set_day && <span style={{display: 'flex', alignItems: "center", gap: 5}}><GoCalendar /> {getSpecificDay(task.set_day)}</span>}
             </div>
           </article>
 
            {/* ======Subtask section====== */}
-           <section className="subtasks">
+           {showSubtasks[task.id] && <section className="subtasks">
             {task.subTasks && task.subTasks.map(task => (
-              <div key={subTask.id} className={`sub-task ${subTask.completed ? 'completed' : ''}`}>
+              <div key={task.id} className={`sub-task ${task.completed ? 'completed' : ''}`}>
                 <label htmlFor={task.id}>
                   <input
                     type="checkbox"
@@ -65,7 +59,7 @@ const MarkedTodo = ({data, handleTaskUpdate, handleTaskDelete, handleShowSubtask
                 </div>
               </div>
             ))}
-           </section>
+          </section>}
         </div>
       ))}
     </>

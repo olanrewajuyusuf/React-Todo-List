@@ -3,15 +3,10 @@ import { MdDeleteOutline, MdEditNote } from "react-icons/md";
 import { GoCalendar } from "react-icons/go";
 import { Link } from "react-router-dom";
 
-const UnMarkedTodo = ({data, handleTaskUpdate, handleTaskDelete, handleShowSubtasks, arrowRotation, showSubtasks, handleDrag}) => {
+const UnMarkedTodo = ({data, handleTaskUpdate, handleTaskDelete, handleShowSubtasks, arrowRotation, showSubtasks, handleDrag, taskUnmarked, getSpecificDay}) => {
 
-  let taskUnmarked = [];
-  let subTask = '';
-  if (data) {
-    taskUnmarked = data.filter(task => !task.completed);
-
-    subTask = taskUnmarked.map(task => task.subTasks)
-  }
+  // const res = data.filter(ele => ele.subTasks);
+  // console.log(res, 'eeer');
 
   return (
     <>
@@ -43,15 +38,18 @@ const UnMarkedTodo = ({data, handleTaskUpdate, handleTaskDelete, handleShowSubta
               />)}
             </section>
             
-            <div className={task.set_deadline && task.set_deadline} style={{fontSize: 12, marginTop: 5}}>
-              {task.set_deadline && <span><GoCalendar /> {task.set_deadline}</span>}
+            <div className={task.set_day && getSpecificDay(task.set_day)} style={{fontSize: 12, marginTop: 5}}>
+              {/* {task.subTasks && task.subTasks.map(ele => (
+                <span>{ele.title.length}</span>
+              ))} */}
+              {task.set_day && <span style={{display: 'flex', alignItems: "center", gap: 5}}><GoCalendar /> {getSpecificDay(task.set_day)}</span>}
             </div>
           </article>
 
           {/* ======Subtask section====== */}
           {showSubtasks[task.id] && <section className="subtasks">
             {task.subTasks && task.subTasks.map(task => (
-              <div key={subTask.id} className={`sub-task ${subTask.completed ? 'completed' : ''}`}>
+              <div key={task.id} className={`sub-task ${task.completed ? 'completed' : ''}`}>
                 <label htmlFor={task.id}>
                   <input
                     type="checkbox"

@@ -13,6 +13,7 @@ const TodoList = () => {
         return JSON.parse(localValue)
     })
 
+    // <====== REORDER LIST USING LOCALSTORAGE FUNCTION ======>
     useEffect(() => {
       localStorage.setItem("ITEMS", JSON.stringify(reorder))
     }, [reorder])
@@ -23,29 +24,48 @@ const TodoList = () => {
           const parsedData = JSON.parse(storedData);
           setReorder(parsedData);
         }
-      }, []);
+    }, []);
     
-      const deleteReorderList = (index) => {
+    const deleteReorderList = (index) => {
         const updatedList = [...reorder];
         updatedList.splice(index, 1);
         setReorder(updatedList);
 
         localStorage.setItem("yourKey", JSON.stringify(updatedList));
-      };
+    };
 
+      // <====== UPDATE TASKS FUNCTION ======>
     const handleTaskUpdate = (id) => {
         const updatedTasks = data.map(item => {
             if (item.id === id) {
                 return {...item, completed: !item.completed}
             }
+            if (item.subTasks) {
+                const updatedSubTasks = item.subTasks.map(subTask => {
+                    if (subTask.id === id) {
+                        return { ...subTask, completed: !subTask.completed };
+                    }
+                    return subTask;
+                });
+                return { ...item, subTasks: updatedSubTasks };
+            }
             return item;
         })
+
+        const updatedSubtask = updatedTasks.find(item => {
+            if (item.subTasks) {
+                return item.subTasks.find(task => task.id === id);
+            }
+            return item.id === id;
+        })
+
+        const updatedTask = updatedTasks.find(item => item.id === id);
     
-        const updatedItem = updatedTasks.find(item => item.id === id)
-        fetch("http://localhost:8000/todoData/" + id, {
-            method: "PUT",
+        let taskID = updatedSubtask ? updatedSubtask.id : id;
+        fetch("http://localhost:8000/todoData/" + taskID, {
+            method: "PATCH",
             headers: {"Content-Type": "application/json"},
-            body: JSON.stringify(updatedItem)
+            body: JSON.stringify(taskID === id ? updatedTask : updatedSubtask)
         }).then(()=>{
             console.log("Item Updated");
             setData(updatedTasks);
@@ -54,31 +74,32 @@ const TodoList = () => {
         });
     }
 
+    // <====== DELETE TASKS FUNCTION ======>
     const handleTaskDelete = (id) => {
         fetch("http://localhost:8000/todoData/" + id, {
             method: "DELETE"
         }).then(()=>{
-            setData((prevItems) => prevItems.filter(item => item.id !== id));
+            setData(prevTask => prevTask.filter(task => task.id !== id));
         }).catch(error => {
             console.error("Error deleting item:", error);
         });
     }
 
+    // <====== DRAG AND DROP FUNCTION =====>
     const handleDrag = (e, dataType) => {
         e.dataTransfer.setData('dataType', dataType);
-      }
+    }
     
-      const handleDrop = (e) => {
+    const handleDrop = (e) => {
         const dataType = e.dataTransfer.getData('dataType');
         console.log("Data", dataType);
         setReorder([...reorder, dataType]);
-      }
+    }
     
-      const handleDragOver = (e) => {
+    const handleDragOver = (e) => {
         e.preventDefault();
-      }
+    }
     
-
     return (
         <>
         <NewTodoForm />
