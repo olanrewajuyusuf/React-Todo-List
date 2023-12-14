@@ -8,7 +8,7 @@ const NewTodoForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const newTask = { title, "id": crypto.randomUUID(), "completed": false };
+    const newTask = { title, "id": crypto.randomUUID(), "completed": false, "set_day": new Date() };
   
     try {
       await fetch("http://localhost:8000/todoData", {
