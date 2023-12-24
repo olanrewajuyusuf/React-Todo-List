@@ -5,9 +5,6 @@ import { Link } from "react-router-dom";
 
 const UnMarkedTodo = ({data, handleTaskUpdate, handleTaskDelete, handleShowSubtasks, arrowRotation, showSubtasks, handleDrag, taskUnmarked, getSpecificDay}) => {
 
-  // const res = data.filter(ele => ele.subTasks);
-  // console.log(res, 'eeer');
-
   return (
     <>
     {data && taskUnmarked.map(task => (
@@ -39,9 +36,6 @@ const UnMarkedTodo = ({data, handleTaskUpdate, handleTaskDelete, handleShowSubta
             </section>
             
             <div className={task.set_day && getSpecificDay(task.set_day)} style={{fontSize: 12, marginTop: 5}}>
-              {/* {task.subTasks && task.subTasks.map(ele => (
-                <span>{ele.title.length}</span>
-              ))} */}
               {task.set_day && <span style={{display: 'flex', alignItems: "center", gap: 5}}><GoCalendar /> {getSpecificDay(task.set_day)}</span>}
             </div>
           </article>
